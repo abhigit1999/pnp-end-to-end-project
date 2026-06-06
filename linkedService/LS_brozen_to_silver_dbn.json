@@ -1,0 +1,13 @@
+{
+	"name": "LS_brozen_to_silver_dbn",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDatabricks",
+		"typeProperties": {
+			"domain": "https://adb-7405604581409315.15.azuredatabricks.net",
+			"existingClusterId": "0603-054526-nhn8s142",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQEVCMEYwQzEwLUUzQjgtNEY2RS05RjMzLUQ4MzQwQzEwODRBM183NDc5MDNlMi1hOTllLTRmMjItOTc1Mi01ZTFhNDhmMDNmMmYiDQp9"
+		}
+	}
+}
