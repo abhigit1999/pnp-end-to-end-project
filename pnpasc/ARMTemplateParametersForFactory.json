@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "pnpasc"
+		},
+		"LS_brozen_to_silver_dbn_accessToken": {
+			"value": ""
+		},
+		"LS_pnpbyedge_bronze_connectionString": {
+			"value": ""
+		},
+		"LS_ascentail_sasUri": {
+			"value": ""
+		},
+		"LS_brozen_to_silver_dbn_properties_typeProperties_existingClusterId": {
+			"value": "0603-054526-nhn8s142"
+		}
+	}
+}
