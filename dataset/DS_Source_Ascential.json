@@ -1,0 +1,27 @@
+{
+	"name": "DS_Source_Ascential",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ascentail",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ascential to pnp"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "PRICEANDPROMO",
+				"container": "scarpedata"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

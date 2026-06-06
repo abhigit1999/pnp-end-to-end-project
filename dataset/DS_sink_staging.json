@@ -1,0 +1,27 @@
+{
+	"name": "DS_sink_staging",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_pnpbyedge_bronze",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ascential to pnp"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "staging",
+				"container": "brozen"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

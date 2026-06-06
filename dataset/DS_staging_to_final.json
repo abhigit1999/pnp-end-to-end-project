@@ -1,0 +1,42 @@
+{
+	"name": "DS_staging_to_final",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_pnpbyedge_bronze",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"finalDirDSP": {
+				"type": "string"
+			},
+			"finalFileDSP": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "staging to final"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().finalFileDSP",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().finalDirDSP",
+					"type": "Expression"
+				},
+				"container": "brozen"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

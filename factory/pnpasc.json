@@ -1,0 +1,15 @@
+{
+	"name": "pnpasc",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "321f0a17-19df-446d-a29e-849de8c3e4e1",
+		"tenantId": "1230f80f-ca6e-40c1-a2df-5153cbf9dbd5"
+	}
+}

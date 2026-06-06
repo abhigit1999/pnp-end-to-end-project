@@ -1,0 +1,36 @@
+{
+	"name": "DS_input_staging",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_pnpbyedge_bronze",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"sourceDSP": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "staging to final"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().sourceDSP",
+					"type": "Expression"
+				},
+				"folderPath": "staging",
+				"container": "brozen"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
