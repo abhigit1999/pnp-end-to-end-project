@@ -1,7 +1,7 @@
 # pnp-end-to-end-project
 
 A production-grade end-to-end data engineering pipeline built on Microsoft Azure, 
-ingesting and transforming competitor retail pricing data across 8 UK retailers into 
+ingesting and transforming competitor retail pricing data across 50+ UK & IE retailers into 
 a clean, business-ready lakehouse for analysts, ML modelling, and Acuity Pricing integration.
 
 ---
