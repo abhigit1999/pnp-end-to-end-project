@@ -6,40 +6,47 @@ a clean, business-ready lakehouse for analysts, ML modelling, and Acuity Pricing
 
 ---
 
-## Architecture Overview
-Ascential ADLS (Source)
-↓
-Azure Data Factory (Incremental Ingestion)
-↓
-Bronze Layer — Raw CSVs (ADLS Gen2)
-↓
-Silver Layer — Cleaned + Standardised (Parquet, partitioned by date)
-↓
-Gold Layer — Business-Ready (Delta, partitioned by date)
-↓
-Databricks SQL Warehouse (Single Source of Truth)
-↓
-┌──────────────┬──────────────┬──────────────┐
-↓              ↓              ↓              ↓
-Analysts    ML Team      Acuity Team    DE Dashboard
-(SQL)      (Delta/Spark) (Integration)  (Monitoring)
+---
+
+## Medallion Architecture
+
+### Bronze Layer
+- Raw CSV files copied from Ascential ADLS source
+- Incremental ingestion — files modified in last 24 hours only
+- Stored at: `brozen/final/YYYY-MM-DD/`
+- Format: CSV (as-is from source)
+- No transformations applied
+
+### Silver Layer
+- Cleaned and standardised data
+- Transformations applied:
+  - Column name standardisation (lowercase, underscores)
+  - Price cleaning (remove £, GBP, negatives, zero)
+  - Boolean standardisation (true/True/Y/1/yes → true)
+  - Category series concatenation (main >> l1 >> l2 >> l3)
+  - SKU/ID cleaning (uppercase, remove dashes)
+  - Null handling via fillna per column type
+  - Deduplication on SKU + retailer + date
+- Format: Parquet
+- Partitioned by: `ingestion_date`, `retailer_name`
+
+### Gold Layer
+- Business-ready data — single source of truth
+- Business rules applied:
+  - Price validation (< £0.20 or > £5000 → null)
+  - Promo price logic (null if not on promo or >= regular price)
+  - Effective price (promo price if on promo, else regular price)
+  - Price band (Budget / Mid-range / Premium / Luxury)
+  - Data quality flags (valid / price_missing / no_upc)
+- Format: Delta
+- Partitioned by: `date`
+- Loaded into SQL Warehouse via incremental MERGE
 
 ---
 
-## Retailers Covered
+## Pipeline Flow
 
-| Retailer     | Source File              |
-|--------------|--------------------------|
-| Argos        | pnp_raw_argos.csv        |
-| Co-op        | pnp_raw_coop.csv         |
-| Euro Giant   | pnp_raw_eurogiant.csv    |
-| Fresh        | pnp_raw_fresh.csv        |
-| John Lewis   | pnp_raw_johnlewis.csv    |
-| M&S          | pnp_raw_mns.csv          |
-| Sainsbury's  | pnp_raw_sainsburys.csv   |
-| Tesco        | pnp_raw_tesco.csv        |
 
----
 
 ## Tech Stack
 
