@@ -304,6 +304,12 @@
 								"dependencyConditions": [
 									"Failed"
 								]
+							},
+							{
+								"activity": "pnp_notebooks",
+								"dependencyConditions": [
+									"Failed"
+								]
 							}
 						],
 						"policy": {
@@ -330,8 +336,8 @@
 						}
 					},
 					{
-						"name": "brozen_to_silver",
-						"type": "DatabricksNotebook",
+						"name": "pnp_notebooks",
+						"type": "DatabricksJob",
 						"dependsOn": [
 							{
 								"activity": "ForEach_takelastmodifiedDate",
@@ -349,7 +355,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Users/abhi.git.201999@gmail.com/pnp/brozen to silver"
+							"jobId": "975520899435985"
 						},
 						"linkedServiceName": {
 							"referenceName": "LS_brozen_to_silver_dbn",
