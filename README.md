@@ -52,13 +52,84 @@ a clean, business-ready lakehouse for analysts, ML modelling, and Acuity Pricing
 
 | Layer             | Technology                          |
 |-------------------|-------------------------------------|
-| Orchestration     | Azure Data Factory (ADF)            |
+| Orchestration     | Azure Data Factory + Databricks     |
 | Storage           | Azure Data Lake Storage Gen2 (ADLS) |
 | Transformation    | Azure Databricks + PySpark          |
 | Warehouse         | Databricks SQL Warehouse            |
 | Secret Management | Azure Key Vault                     |
 | Alerting          | Azure Logic Apps                    |
-| Monitoring        | Azure Monitor                       |
 | Visualisation     | Power BI                            |
 | Version Control   | GitHub + GitHub Actions             |
 | Format            | Parquet (Silver) + Delta (Gold)     |
+
+
+## Pipeline Flow
+ADF Trigger (Daily, 11:00 AM IST)
+
+│
+
+▼
+
+Copy Activity — Ascential → Bronze Staging
+
+│
+
+▼
+
+Get Metadata + ForEach — filter files modified in last 24h
+
+│
+
+▼
+
+Bronze Final — brozen/final/YYYY-MM-DD/
+
+│
+
+▼
+
+Databricks Job (Scheduled, 11:30 AM IST)
+
+├── Silver Notebook  → clean, standardise, dedupe → silver/
+
+├── Gold Notebook    → business rules, effective_price → gold/prices/
+
+└── Warehouse MERGE  → incremental upsert → asc_pnp.pnp_gold.prices_current
+
+│
+
+▼
+
+Watermark Log — asc_pnp.pnp_gold.watermark (rows, status, errors)
+
+│
+
+├──→ Power BI (Scheduled refresh, 12:00 PM IST)
+
+│     ├── Business dashboard (prices, prices_current)
+
+│     └── DE Pipeline Health dashboard (watermark)
+
+│
+
+└──→ Logic App Alerts (success/failure email)
+
+
+## Single Source of Truth — Unity Catalog
+
+All Gold data is registered under Unity Catalog for governed, SQL-based access:
+asc_pnp (catalog)
+
+└── pnp_gold (schema)
+
+├── prices           — full history, partitioned by date
+
+├── prices_current   — latest snapshot per sku + retailer (MERGE target)
+
+└── watermark        — pipeline run audit log
+## Data Quality & Reliability
+
+- Per-row `data_quality` flag (`valid` / `price_missing` / `sku_missing` / `no_upc` / etc.)
+- Watermark table logs `silver_rows`, `gold_rows`, `status`, and `error_message` for every run — including failures
+- Incremental writes via `partitionBy(date)` + `replaceWhere` — safe to rerun without duplication
+- Incremental MERGE into `prices_current` keyed on `sku + retailer_name`, updating only changed rows
