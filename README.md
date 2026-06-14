@@ -88,7 +88,7 @@ Bronze Final — brozen/final/YYYY-MM-DD/
 
 ▼
 
-Databricks Job (Scheduled, 11:30 AM IST)
+Databricks Job
 
 ├── Silver Notebook  → clean, standardise, dedupe → silver/
 
@@ -113,7 +113,7 @@ Watermark Log — asc_pnp.pnp_gold.watermark (rows, status, errors)
 │
 
 └──→ Logic App Alerts (success/failure email)
-
+Access by data analysts, BI analyst, the ML team, and acuity integration teams
 
 ## Single Source of Truth — Unity Catalog
 
