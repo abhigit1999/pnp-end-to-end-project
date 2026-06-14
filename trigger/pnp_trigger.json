@@ -1,0 +1,24 @@
+{
+	"name": "pnp_trigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "PNP_RAW_DATA_INJECTION",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2026-06-12T12:00:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}
